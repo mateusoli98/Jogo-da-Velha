@@ -5,6 +5,12 @@ public class Player {
     private String nickname, simbol;
     private int score;
 
+    public Player(String nickname, String simbol) {
+        this.nickname = nickname;
+        this.simbol = simbol;
+        this.score = 0;
+    }
+
     public String getSimbol() {
         return simbol;
     }
