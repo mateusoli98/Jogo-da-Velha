@@ -21,4 +21,64 @@ public class BoardController {
         }
         return false;
     }
+
+    public String changeSymbol(String symbol) {
+        return symbol.equals("X") ? "O" : "X";
+    }
+
+    public String winnerSymbol(String symbols[][]) {
+        String valueLine = checkLine(symbols);
+        String valueColumn = checkColumn(symbols);
+        String valueDiagonal = checkDiagonal(symbols);
+
+        if (valueLine != null) {
+            return valueLine;
+        }
+        if (valueColumn != null) {
+            return valueColumn;
+        }
+        if (valueDiagonal != null) {
+            return valueDiagonal;
+        }
+
+        return null;
+    }
+
+    private String checkLine(String symbols[][]) {
+
+        if ((symbols[0][0].equals(symbols[0][1]) && symbols[0][0].equals(symbols[0][2]) && !symbols[0][0].equals("E"))) {
+            return symbols[0][0];
+        }
+        if ((symbols[1][0].equals(symbols[1][1]) && symbols[1][0].equals(symbols[1][2])) && !symbols[1][0].equals("E")) {
+            return symbols[1][0];
+        }
+        if ((symbols[2][0].equals(symbols[2][1]) && symbols[2][0].equals(symbols[2][2])) && !symbols[2][0].equals("E")) {
+            return symbols[2][0];
+        }
+
+        return null;
+    }
+
+    private String checkColumn(String symbols[][]) {
+        if ((symbols[0][0].equals(symbols[1][0]) && symbols[0][0].equals(symbols[2][0]) && !symbols[0][0].equals("E"))) {
+            return symbols[0][0];
+        }
+        if ((symbols[0][1].equals(symbols[1][1]) && symbols[0][1].equals(symbols[2][1])) && !symbols[0][1].equals("E")) {
+            return symbols[0][1];
+        }
+        if ((symbols[0][2].equals(symbols[1][2]) && symbols[0][2].equals(symbols[2][2])) && !symbols[0][2].equals("E")) {
+            return symbols[0][2];
+        }
+        return null;
+    }
+
+    private String checkDiagonal(String symbols[][]) {
+        if ((symbols[0][0].equals(symbols[1][1]) && symbols[0][0].equals(symbols[2][2]) && !symbols[0][0].equals("E"))) {
+            return symbols[0][0];
+        }
+        if ((symbols[0][2].equals(symbols[1][1]) && symbols[0][2].equals(symbols[2][0])) && !symbols[0][2].equals("E")) {
+            return symbols[0][2];
+        }
+        return null;
+    }
 }

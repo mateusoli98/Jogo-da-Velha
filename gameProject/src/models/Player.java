@@ -2,21 +2,27 @@ package models;
 
 public class Player {
 
-    private String nickname, simbol;
+    private String nickname, symbol;
     private int score;
 
-    public Player(String nickname, String simbol) {
+    public Player(String nickname, String symbol) {
         this.nickname = nickname;
-        this.simbol = simbol;
+        this.symbol = symbol;
+        this.score = 0;
+    }
+    
+    public Player() {
+        this.nickname = "";
+        this.symbol = "";
         this.score = 0;
     }
 
-    public String getSimbol() {
-        return simbol;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setSimbol(String simbol) {
-        this.simbol = simbol;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public int getScore() {
