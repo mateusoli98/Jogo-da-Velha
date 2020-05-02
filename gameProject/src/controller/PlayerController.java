@@ -5,8 +5,8 @@ import models.Player;
 
 public class PlayerController {
 
-    public Player create(String simbol) {
-        String nickname = JOptionPane.showInputDialog("Digite seu Nickname: ");
+    public Player create(String simbol, int i) {
+        String nickname = JOptionPane.showInputDialog("Digite seu Nickname jogador " + i + ": ");
         return new Player(nickname, simbol);
     }
 
