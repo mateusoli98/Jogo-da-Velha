@@ -7,47 +7,48 @@ import javax.swing.JOptionPane;
 import models.Player;
 
 public class JFGame extends javax.swing.JFrame {
-
+    
     private Player player1, player2;
     private PlayerController playerController = new PlayerController();
     private BoardController boardController = new BoardController();
     private String[][] symbols = new String[3][3];
     private String symbol = "X";
     private int contPlays = 0;
-
+    private int old = 0;
+    
     public JFGame() {
         initComponents();
         initialGame();
     }
-
+    
     private void initialGame() {
         loadSimbols();
         player1 = playerController.create(lblSimbol1.getText(), 1);
         player2 = playerController.create(lblSimbol2.getText(), 2);
-
+        
         while (player1.getNickname().equals(player2.getNickname())) {
             JOptionPane.showMessageDialog(null, "Nickname ja existe, tente outro.", "Erro", JOptionPane.ERROR_MESSAGE);
             player2 = playerController.create(lblSimbol2.getText(), 2);
         }
-
+        
         txtNickname1.setText(player1.getNickname());
         txtNickname2.setText(player2.getNickname());
         loadPunctuation();
     }
-
+    
     private void updatePlayers() {
         loadData();
         player1 = playerController.update(player1, player1);
         player2 = playerController.update(player2, player2);
     }
-
+    
     private void loadData() {
         player1.setNickname(txtNickname1.getText());
         player1.setSymbol(lblSimbol1.getText());
         player2.setNickname(txtNickname2.getText());
         player2.setSymbol(lblSimbol2.getText());
     }
-
+    
     private void loadSimbols() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -55,18 +56,19 @@ public class JFGame extends javax.swing.JFrame {
             }
         }
     }
-
+    
     private void loadPunctuation() {
         lblScorePlayer1.setText(player1.getNickname() + ": " + String.valueOf(player1.getScore()));
         lblScorePlayer2.setText(player2.getNickname() + ": " + String.valueOf(player2.getScore()));
+        lblOld.setText(lblOld.getText().substring(0, 7) + old);
     }
-
+    
     private void changeSimbol(JButton btn) {
         btn.setText(symbol);
         btn.setEnabled(false);
         symbol = boardController.changeSymbol(symbol);
     }
-
+    
     private void enabledButtons(boolean flag) {
         btn1.setEnabled(flag);
         btn2.setEnabled(flag);
@@ -78,7 +80,7 @@ public class JFGame extends javax.swing.JFrame {
         btn8.setEnabled(flag);
         btn9.setEnabled(flag);
     }
-
+    
     private void cleanTextButtons() {
         btn1.setText("");
         btn2.setText("");
@@ -90,21 +92,20 @@ public class JFGame extends javax.swing.JFrame {
         btn8.setText("");
         btn9.setText("");
     }
-
+    
     private void changeSymbolPlayer() {
         lblSimbol1.setText(boardController.changeSymbol(lblSimbol1.getText()));
         lblSimbol2.setText(boardController.changeSymbol(lblSimbol2.getText()));
     }
-
+    
     private void resertGame() {
         enabledButtons(true);
         cleanTextButtons();
         loadSimbols();
         symbol = "X";
         contPlays = 0;
-
     }
-
+    
     private void setScore(Player playerWinner) {
         if (player1.getNickname().equals(playerWinner.getNickname())) {
             player1.setScore(1);
@@ -113,11 +114,11 @@ public class JFGame extends javax.swing.JFrame {
         }
         loadPunctuation();
     }
-
+    
     private void changePlays() {
         contPlays++;
         Player playerWinner;
-
+        
         if (contPlays >= 5) {
             playerWinner = playerController.winner(player1, player2, symbols);
             if (playerWinner != null) {
@@ -127,11 +128,13 @@ public class JFGame extends javax.swing.JFrame {
             }
         }
         if (contPlays == 9) {
+            old++;
             JOptionPane.showMessageDialog(null, "Empate. Tente novamente!", "Empate", JOptionPane.WARNING_MESSAGE);
+            loadPunctuation();
             resertGame();
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -152,8 +155,10 @@ public class JFGame extends javax.swing.JFrame {
         txtNickname2 = new javax.swing.JTextField();
         txtNickname1 = new javax.swing.JTextField();
         lblScorePlayer2 = new javax.swing.JLabel();
-        lblPunctuation = new javax.swing.JLabel();
+        lblOld = new javax.swing.JLabel();
         lblScorePlayer1 = new javax.swing.JLabel();
+        lblPunctuation = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Jogo da Velha");
@@ -342,12 +347,29 @@ public class JFGame extends javax.swing.JFrame {
         lblScorePlayer2.setFont(new java.awt.Font("EngraversGothic BT", 0, 18)); // NOI18N
         panBoard.add(lblScorePlayer2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 510, 180, 30));
 
+        lblOld.setFont(new java.awt.Font("EngraversGothic BT", 0, 18)); // NOI18N
+        lblOld.setText("Velha: ");
+        panBoard.add(lblOld, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 490, 90, -1));
+
+        lblScorePlayer1.setFont(new java.awt.Font("EngraversGothic BT", 0, 18)); // NOI18N
+        panBoard.add(lblScorePlayer1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 180, 30));
+
         lblPunctuation.setFont(new java.awt.Font("EngraversGothic BT", 0, 18)); // NOI18N
         lblPunctuation.setText("Pontuacao:");
         panBoard.add(lblPunctuation, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, -1, -1));
 
-        lblScorePlayer1.setFont(new java.awt.Font("EngraversGothic BT", 0, 18)); // NOI18N
-        panBoard.add(lblScorePlayer1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 180, 30));
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(51, 51, 51));
+        jButton1.setText("abrir");
+        jButton1.setBorder(null);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        panBoard.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, 70, 20));
 
         getContentPane().add(panBoard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 550));
 
@@ -451,6 +473,11 @@ public class JFGame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblSimbol2MouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFChart chart = new JFChart(player1, player2, old);
+        chart.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn2;
@@ -461,7 +488,9 @@ public class JFGame extends javax.swing.JFrame {
     private javax.swing.JButton btn7;
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblOld;
     private javax.swing.JLabel lblPunctuation;
     private javax.swing.JLabel lblScorePlayer1;
     private javax.swing.JLabel lblScorePlayer2;
