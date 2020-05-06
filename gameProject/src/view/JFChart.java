@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import models.Player;
 import org.jfree.chart.ChartFactory;
@@ -11,6 +12,8 @@ public class JFChart extends javax.swing.JFrame {
 
     public JFChart(Player player1, Player player2, int old) {
         initComponents();
+        getContentPane().add(panChart);
+        panChart.setLayout(new BorderLayout(0, 0));
         initChart(player1, player2, old);
     }
 
@@ -33,13 +36,32 @@ public class JFChart extends javax.swing.JFrame {
 
         panChart = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        panChart.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(panChart, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 530));
+        javax.swing.GroupLayout panChartLayout = new javax.swing.GroupLayout(panChart);
+        panChart.setLayout(panChartLayout);
+        panChartLayout.setHorizontalGroup(
+            panChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 622, Short.MAX_VALUE)
+        );
+        panChartLayout.setVerticalGroup(
+            panChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 532, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
 
